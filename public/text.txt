@@ -1,0 +1,1 @@
+this is a test file, if you see this the static folder is working!
