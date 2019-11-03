@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+{% include './includes/head.njk' %}
+    
+</head>
+<body>
+    
+<header>
+
+    {% include './includes/header.njk' %}
+
+</header>
+
+<body>
+
+
+<div class='post'>
+
+   <div>Create Post</div><br><Br>
+
+    <form action="/create/" method="POST">
+    <input type = "text" name="title" placeholder="Title" />
+    <textarea name="body" placeholder="write your post here"></textarea>
+    <input type = "password" placeholder="Password" name="pw"/>
+    <input type = "submit" class="waves-effect waves-light btn navybg" value="Create Post"/>
+    </form>
+
+</div>
+
+
+</body>
+
+
+<footer>
+
+    {% include './includes/footer.njk' %}
+
+</footer>
+
+
+</body>
+</html>

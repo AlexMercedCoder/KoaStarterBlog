@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+{% include './includes/head.njk' %}
+    
+</head>
+<body>
+    
+<header>
+
+    {% include './includes/header.njk' %}
+
+</header>
+
+<body>
+
+<center><a href="/create/">Create a Post</a></center>
+
+{% for post in posts %}
+
+<div class='post'>
+
+   <div> {{post.title}}</div><br><Br>
+    
+    <a href="/edit/{{post.id}}">Edit</a>
+
+    <form action="/delete/{{post.id}}?_method=DELETE" method="POST">
+    <input type = "password" placeholder="Password" name="pw"/>
+    <input type = "submit" class="waves-effect waves-light btn navybg" value="DELETE"/>
+    </form>
+
+</div>
+
+{% endfor %}
+
+</body>
+
+
+<footer>
+
+    {% include './includes/footer.njk' %}
+
+</footer>
+
+
+</body>
+</html>
