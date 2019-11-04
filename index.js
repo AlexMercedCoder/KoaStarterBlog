@@ -95,13 +95,13 @@ route.delete('/delete/:id', (ctx, next) => {
     console.log(ctx.request.body)
     if (ctx.request.body.pw === process.env.pw){
         Blog.findByIdAndRemove(ctx.params.id, (err, result) => {
+         
        })
     }else{
         console.log('wrong password')
         
     }
-    ctx.status = 308
-    ctx.redirect('/')
+    return ctx.render('complete.njk');
 });
 
 //edit route
@@ -125,7 +125,7 @@ route.put('/edit/:id', (ctx, next) => {
      }else{
          console.log('wrong password');
         }
-     ctx.redirect('/');
+    return ctx.render('complete.njk');
 });
 
 //create route
@@ -145,7 +145,7 @@ route.post('/create', (ctx, next) => {
          console.log('wrong password');
         ;
      }
-     ctx.redirect('/')
+     return ctx.render('complete.njk');
 });
 
 ////////////////////////////
