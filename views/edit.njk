@@ -18,13 +18,13 @@
 
 <div class='post'>
 
-   <div>Create Post</div><br><Br>
+   <div>Edit Post</div><br><Br>
 
     <form action="/edit/{{post.id}}?_method=PUT" method="POST">
     <input type = "text" value={{post.title}} name="title" placeholder="Title" />
     <textarea name="body" placeholder="write your post here">{{post.body}}</textarea>
     <input type = "password" placeholder="Password" name="pw"/>
-    <input type = "submit" class="waves-effect waves-light btn navybg" value="Create Post"/>
+    <input type = "submit" class="waves-effect waves-light btn navybg" value="Edit Post"/>
     </form>
 
 </div>

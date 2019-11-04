@@ -2,6 +2,7 @@
 //Initializing Environment Variables and other middleware
 //npm i dotenv
 //npm i koa-methodoverride
+//npm i koa-bodyparser
 ///////////////////////
 require('dotenv').config();
 const override = require('koa-methodoverride');
@@ -84,7 +85,7 @@ route.get('/view/:id', (ctx, next) => {
     return Blog.findById(ctx.params.id, (error, results) => {
         console.log(results)
         ctx.render('show.njk', {
-            posts: results
+            post: results
         });
     });
 });
@@ -130,7 +131,7 @@ route.put('/edit/:id', (ctx, next) => {
     console.log('editing a post');
     console.log(ctx.request.body)
     if (ctx.request.body.pw === process.env.pw){
-        Blog.findByIdAndUpdate(ctx.params.id, ctx.request.body, {new:True}, (err, result) => {
+        Blog.findByIdAndUpdate(ctx.params.id, ctx.request.body, {new:true}, (err, result) => {
          console.log(result); 
         })
      }else{
@@ -170,8 +171,8 @@ route.post('/create', (ctx, next) => {
 ////////////////////////
 //Middleware
 /////////////////////////
-server.use(parser());
 server.use(override('_method'))
+server.use(parser());
 server.use(views('./views', {map: {njk: 'nunjucks'}}));
 server.use(route.routes());
 server.use(static('./public'));
