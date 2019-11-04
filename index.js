@@ -16,7 +16,7 @@ PORT = process.env.PORT || 5000;
 ////////////////////////
 const mongoose = require('mongoose');
 const db = mongoose.connection;
-const host = process.env.host;
+const host = `mongodb+srv://${process.evn.host}:${process.evn.host}@sei-fprzs.mongodb.net/gaprojects?retryWrites=true&w=majority`;
 const dbupdate = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
