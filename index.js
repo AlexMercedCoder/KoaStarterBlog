@@ -185,4 +185,4 @@ server.use(static('./public'));
 /////////////////////
 //Our Listener on Port 1985
 /////////////////////
-server.listen(process.env.PORT || 5000,'localhost',() => console.log('Listening on port 5000'));
+server.listen(process.env.PORT || 5000);
