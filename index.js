@@ -78,6 +78,17 @@ route.get('/', (ctx, next) => {
     });
 });
 
+//show route
+route.get('/view/:id', (ctx, next) => {
+    console.log('connected to show route');
+    return Blog.findById(ctx.params.id, (error, results) => {
+        console.log(results)
+        ctx.render('show.njk', {
+            posts: results
+        });
+    });
+});
+
 //admin route
 route.get('/admin', (ctx, next) => {
     console.log('connected to admin route');
