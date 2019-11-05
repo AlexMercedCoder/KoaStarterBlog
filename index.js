@@ -57,10 +57,13 @@ const route = new Router();
 //initializing views
 //npm i koa-views
 //npm i nunjucks
+//npm i koa-nunjucks-2
 ////////////////////////////////;
-const views = require('koa-views');
-const nunj = require('nunjucks');
-nunj.configure('./views', {autoescape: true});
+// const views = require('koa-views');
+// const nunj = require('nunjucks');
+// nunj.configure('./views', {autoescape: true});
+const koaNunjucks = require('koa-nunjucks-2');
+const path = require('path');
 
 
 ///////////////////////////
@@ -71,11 +74,13 @@ nunj.configure('./views', {autoescape: true});
 //root route
 route.get('/', (ctx, next) => {
     console.log('connected to root route');
+    console.log(ctx);
     return Blog.find({}, (error, results) => {
         console.log(results)
-        ctx.render('index.njk', {
+        ctx.render('index', {
             posts: results
         });
+        console.log('the view was rendered')
     });
 });
 
@@ -84,9 +89,10 @@ route.get('/view/:id', (ctx, next) => {
     console.log('connected to show route');
     return Blog.findById(ctx.params.id, (error, results) => {
         console.log(results)
-        ctx.render('show.njk', {
+        ctx.render('show', {
             post: results
         });
+        console.log('the view was rendered')
     });
 });
 
@@ -95,7 +101,7 @@ route.get('/admin', (ctx, next) => {
     console.log('connected to admin route');
     return Blog.find({}, (error, results) => {
         console.log(results)
-        ctx.render('admin.njk', {
+        ctx.render('admin', {
             posts: results
         });
     });
@@ -113,7 +119,7 @@ route.delete('/delete/:id', (ctx, next) => {
         console.log('wrong password')
         
     }
-    return ctx.render('complete.njk');
+    return ctx.render('complete');
 });
 
 //edit route
@@ -121,7 +127,7 @@ route.get('/edit/:id', (ctx, next) => {
     console.log('connected to edit route');
     return Blog.findById(ctx.params.id, (err, results) => {
         console.log(results);
-        ctx.render('edit.njk', {
+        ctx.render('edit', {
         post: results
         });
     });
@@ -137,7 +143,7 @@ route.put('/edit/:id', (ctx, next) => {
      }else{
          console.log('wrong password');
         }
-    return ctx.render('complete.njk');
+    return ctx.render('complete');
 });
 
 
@@ -145,7 +151,7 @@ route.put('/edit/:id', (ctx, next) => {
 //create route
 route.get('/create', (ctx, next) => {
     console.log('connected to create route');
-    return ctx.render('create.njk');
+    return ctx.render('create');
 });
 
 route.post('/create', (ctx, next) => {
@@ -159,7 +165,7 @@ route.post('/create', (ctx, next) => {
          console.log('wrong password');
         ;
      }
-     return ctx.render('complete.njk');
+     return ctx.render('complete');
 });
 
 ////////////////////////////
@@ -175,7 +181,14 @@ route.post('/create', (ctx, next) => {
 /////////////////////////
 server.use(override('_method'))
 server.use(parser());
-server.use(views('./views', {map: {njk: 'nunjucks'}}));
+// server.use(views('./views', {map: {html: 'nunjucks'}}));
+server.use(koaNunjucks({
+    ext: 'njk',
+    path: './views',
+    nunjucksConfig: {
+      trimBlocks: true
+    }
+  }));
 server.use(route.routes());
 server.use(static('./public'));
 

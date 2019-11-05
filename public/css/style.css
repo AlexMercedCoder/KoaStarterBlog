@@ -9,3 +9,5 @@ input {color: white;}
 .post div {background-color: white; width: 80%; color: #001f3f; margin: 10px auto; padding: 10px; font-size: 2.4em;}
 
 .post p {width: 80%; margin: 10px auto; border: 3px solid white; padding: 10px;}
+
+textarea {color: white;}
