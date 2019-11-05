@@ -71,12 +71,12 @@ const koaNunjucks = require('koa-nunjucks-2');
 ///////////////////////////
 
 //root route
-route.get('/', (ctx, next) => {
+route.get('/', async (ctx, next) => {
     console.log('connected to root route');
     console.log(ctx);
-    return Blog.find({}, (error, results) => {
+    return Blog.find({}, async (error, results) => {
         console.log(results)
-        ctx.render('index', {
+       await ctx.render('index', {
             posts: results
         });
         console.log('the view was rendered')
@@ -84,11 +84,11 @@ route.get('/', (ctx, next) => {
 });
 
 //show route
-route.get('/view/:id', (ctx, next) => {
+route.get('/view/:id', async (ctx, next) => {
     console.log('connected to show route');
-    return Blog.findById(ctx.params.id, (error, results) => {
+    return Blog.findById(ctx.params.id, async (error, results) => {
         console.log(results)
-        ctx.render('show', {
+        await ctx.render('show', {
             post: results
         });
         console.log('the view was rendered')
@@ -96,43 +96,43 @@ route.get('/view/:id', (ctx, next) => {
 });
 
 //admin route
-route.get('/admin', (ctx, next) => {
+route.get('/admin', async (ctx, next) => {
     console.log('connected to admin route');
-    return Blog.find({}, (error, results) => {
+    return await Blog.find({}, async (error, results) => {
         console.log(results)
-        ctx.render('admin', {
+        await ctx.render('admin', {
             posts: results
         });
     });
 });
 
 //delete route
-route.delete('/delete/:id', (ctx, next) => {
+route.delete('/delete/:id', async (ctx, next) => {
     console.log('connected to delete route');
     console.log(ctx.request.body)
     if (ctx.request.body.pw === process.env.pw){
-        Blog.findByIdAndRemove(ctx.params.id, (err, result) => {
+        Blog.findByIdAndRemove(ctx.params.id, async (err, result) => {
          
        })
     }else{
         console.log('wrong password')
         
     }
-    return ctx.render('complete');
+    return await ctx.redirect('/admin');
 });
 
 //edit route
-route.get('/edit/:id', (ctx, next) => {
+route.get('/edit/:id', async (ctx, next) => {
     console.log('connected to edit route');
-    return Blog.findById(ctx.params.id, (err, results) => {
+    return await Blog.findById(ctx.params.id, async (err, results) => {
         console.log(results);
-        ctx.render('edit', {
+        await ctx.render('edit', {
         post: results
         });
     });
 });
 
-route.put('/edit/:id', (ctx, next) => {
+route.put('/edit/:id', async (ctx, next) => {
     console.log('editing a post');
     console.log(ctx.request.body)
     if (ctx.request.body.pw === process.env.pw){
@@ -142,18 +142,18 @@ route.put('/edit/:id', (ctx, next) => {
      }else{
          console.log('wrong password');
         }
-    return ctx.render('complete');
+    return await ctx.redirect('/admin');
 });
 
 
 
 //create route
-route.get('/create', (ctx, next) => {
+route.get('/create', async (ctx, next) => {
     console.log('connected to create route');
-    return ctx.render('create');
+    return await ctx.render('create');
 });
 
-route.post('/create', (ctx, next) => {
+route.post('/create', async (ctx, next) => {
     console.log('creating a post');
     console.log(ctx.request.body)
     if (ctx.request.body.pw === process.env.pw){
@@ -164,7 +164,7 @@ route.post('/create', (ctx, next) => {
          console.log('wrong password');
         ;
      }
-     return ctx.render('complete');
+     return await ctx.render('complete');
 });
 
 ////////////////////////////
