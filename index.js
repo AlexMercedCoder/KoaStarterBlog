@@ -63,7 +63,6 @@ const route = new Router();
 // const nunj = require('nunjucks');
 // nunj.configure('./views', {autoescape: true});
 const koaNunjucks = require('koa-nunjucks-2');
-const path = require('path');
 
 
 ///////////////////////////
